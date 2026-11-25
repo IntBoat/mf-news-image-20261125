@@ -1,20 +1,22 @@
-"""Entry program for mf-news-image-20261124.
+#!/usr/bin/env python3
+"""Sum up 25 November's world news in one image — a make.fun entry.
 
-Copies the pre-drawn poster entry.png to /output/entry.png.
+The program copies the poster image held in this repository to
+/output/entry.png, where the competition's sealed scorer reads it.
 """
-import os
+
 import shutil
+from pathlib import Path
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+SOURCE = Path(__file__).resolve().parent / "entry.png"
+OUTPUT = Path("/output/entry.png")
 
 
-def main():
-    src = os.path.join(HERE, "entry.png")
-    if not os.path.isfile(src):
-        raise FileNotFoundError("entry.png missing next to main.py")
-    os.makedirs("/output", exist_ok=True)
-    shutil.copyfile(src, "/output/entry.png")
+def copy_poster() -> None:
+    assert SOURCE.is_file(), "poster image is missing"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(SOURCE, OUTPUT)
 
 
 if __name__ == "__main__":
-    main()
+    copy_poster()
